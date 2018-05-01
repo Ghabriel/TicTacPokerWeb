@@ -1,0 +1,16 @@
+@import '~bootstrap/scss/bootstrap-grid.scss';
+
+.container {
+    font-size: 20px;
+    padding: 30px;
+}
+
+button {
+    margin-top: 5px;
+}
+
+@include media-breakpoint-up(md) {
+    .container {
+        font-size: 30px;
+    }
+}

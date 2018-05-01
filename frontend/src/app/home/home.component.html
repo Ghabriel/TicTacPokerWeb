@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <form (submit)="login(username.value, $event)">
+                <div class="form-group">
+                    <label for="username">Como você quer ser chamado?</label>
+                    <input type="text" class="form-control" id="username" placeholder="Seu nome aqui... (até 30 caracteres)" maxlength="30" #username>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

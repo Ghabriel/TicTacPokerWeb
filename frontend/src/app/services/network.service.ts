@@ -6,6 +6,7 @@ import { Player } from './../types';
 @Injectable()
 export class NetworkService {
     private socket: SocketIOClient.Socket;
+    private loggedIn: boolean = false;
 
     constructor() {
         this.socket = io.connect();
@@ -16,7 +17,14 @@ export class NetworkService {
     }
 
     authenticate(token: string): Promise<boolean> {
-        return this.emit('authentication', token);
+        return this.emit<boolean>('authentication', token).then(success => {
+            this.loggedIn = success;
+            return success;
+        });
+    }
+
+    isLoggedIn(): Promise<boolean> {
+        return Promise.resolve(this.loggedIn);
     }
 
     getOnlinePlayers(): Promise<Player[]> {

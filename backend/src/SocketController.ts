@@ -25,17 +25,6 @@ export class SocketController {
         });
         console.log(`A user has connected. Users online: ${SocketController.connectedPlayers.length}`);
 
-        socket.on('disconnect', () => {
-            const players = SocketController.connectedPlayers;
-            for (let i = 0; i < players.length; i++) {
-                if (players[i].name == name) {
-                    players.splice(i, 1);
-                    break;
-                }
-            }
-            console.log(`A user has disconnected. Users online: ${SocketController.connectedPlayers.length}`);
-        });
-
         socket.on('getOnlinePlayers', (callback: Callback<Player[]>) => {
             const result: Player[] = [];
 
@@ -53,4 +42,16 @@ export class SocketController {
         this.socket.disconnect(true);
     }
 
+    onDisconnect(): void {
+        const players = SocketController.connectedPlayers;
+
+        for (let i = 0; i < players.length; i++) {
+            if (players[i].name == this.name) {
+                players.splice(i, 1);
+                break;
+            }
+        }
+
+        console.log(`A user has disconnected. Users online: ${SocketController.connectedPlayers.length}`);
+    }
 }

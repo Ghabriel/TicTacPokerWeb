@@ -38,6 +38,12 @@ export const setupSocket = (server: http.Server): void => {
             }
 
             playerSockets[name] = new SocketController(io, socket, name);
+
+            socket.on('disconnect', () => {
+                playerSockets[name].onDisconnect();
+                delete playerSockets[name];
+            });
+
             callback(true);
         });
     });

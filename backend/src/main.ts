@@ -17,7 +17,7 @@ const server = http.createServer(app);
 const port = process.env.PORT || '3001';
 
 app.use(helmet());
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 app.use(express.static(root + '/frontend/dist'));
 

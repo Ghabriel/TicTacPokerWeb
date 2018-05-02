@@ -1,12 +1,11 @@
 import * as socketio from 'socket.io';
 
+import { Player, PlayerStatus } from './types';
+
 interface PlayerConnection {
     socketId: string;
     name: string;
-}
-
-interface Player {
-    name: string;
+    status: PlayerStatus;
 }
 
 type Callback<T> = (value: T) => void;
@@ -21,16 +20,20 @@ export class SocketController {
     ) {
         SocketController.connectedPlayers.push({
             socketId: socket.id,
-            name: name
+            name: name,
+            status: PlayerStatus.AVAILABLE
         });
-        console.log(`A user has connected. Users online: ${SocketController.connectedPlayers.length}`);
+        // console.log(`A user has connected. Users online: ${SocketController.connectedPlayers.length}`);
 
         socket.on('getOnlinePlayers', (callback: Callback<Player[]>) => {
             const result: Player[] = [];
 
             for (const player of SocketController.connectedPlayers) {
                 if (player.name != this.name) {
-                    result.push({ name: player.name });
+                    result.push({
+                        name: player.name,
+                        status: player.status
+                    });
                 }
             }
 
@@ -52,6 +55,6 @@ export class SocketController {
             }
         }
 
-        console.log(`A user has disconnected. Users online: ${SocketController.connectedPlayers.length}`);
+        // console.log(`A user has disconnected. Users online: ${SocketController.connectedPlayers.length}`);
     }
 }

@@ -8,13 +8,17 @@ import { HomeComponent } from './home/home.component';
 import { LobbyComponent } from './lobby/lobby.component';
 import { NetworkService } from './services/network.service';
 import { NavbarComponent } from './structural/navbar/navbar.component';
+import { LobbyUserListComponent } from './structural/lobby-user-list/lobby-user-list.component';
+import { LobbyCustomGameComponent } from './structural/lobby-custom-game/lobby-custom-game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    LobbyComponent
+    LobbyComponent,
+    LobbyUserListComponent,
+    LobbyCustomGameComponent
   ],
   imports: [
     AppRoutingModule,

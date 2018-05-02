@@ -3,64 +3,6 @@
         <h1>Lobby</h1>
     </header>
 
-    <!-- <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <button class="btn btn-primary">Jogar contra IA</button>
-            </div>
-            <div class="col-md-6">
-                <button class="btn btn-primary">Partida personalizada</button>
-            </div>
-        </div>
-    </div> -->
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col" class="id-column">#</th>
-                <th scope="col" class="name-column">Nome</th>
-                <th scope="col" class="action-column">Ação</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngIf="loading">
-                <td colspan="3">Carregando...</td>
-            </tr>
-            <tr *ngIf="!loading && players.length == 0">
-                <td colspan="3" class="no-players">
-                    Ninguém está online. :(
-                </td>
-            </tr>
-            <tr *ngFor="let player of players; let i = index"
-                [class.clickable]="customMatchMode"
-                [class.selected]="selectedPlayerIndexes.has(i)"
-                (click)="selectPlayer(i)">
-                <th scope="row">{{ i + 1 }}</th>
-                <td class="player-name">{{ player.name }}</td>
-
-                <td *ngIf="player.status == PlayerStatus.IN_GAME">Em jogo</td>
-                <td *ngIf="player.status == PlayerStatus.AVAILABLE">
-                    <a class="btn btn-primary btn-sm disabled" *ngIf="customMatchMode" routerLink="">Jogar 1x1</a>
-                    <button class="btn btn-primary btn-sm" *ngIf="!customMatchMode" (click)="play(i)">Jogar 1x1</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class='after-table'>
-        <ng-container *ngIf="customMatchMode">
-            <button class="btn btn-danger" (click)="abortCustomMode()">Cancelar</button>
-            <button *ngFor="let gameMode of possibleGameModes" class="btn btn-success" (click)="playCustom(gameMode[1])">
-                {{ gameMode[0] }}
-            </button>
-
-            <div class="alert alert-info">Selecione os jogadores participantes.</div>
-        </ng-container>
-
-        <ng-container *ngIf="!customMatchMode">
-            <button class="btn btn-primary" (click)="playAI()">Jogar contra IA</button>
-            <button class="btn btn-primary" *ngIf="players.length > 0" (click)="enterCustomMode()">Partida personalizada</button>
-        </ng-container>
-    </div>
-
+    <app-lobby-user-list *ngIf="!customMatchMode" (initCustom)="initCustomMatch($event)"></app-lobby-user-list>
+    <app-lobby-custom-game *ngIf="customMatchMode" (abortCustom)="abortCustomMatch()"></app-lobby-custom-game>
 </article>

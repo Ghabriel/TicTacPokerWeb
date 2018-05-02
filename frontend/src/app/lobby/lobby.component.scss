@@ -2,20 +2,40 @@ article {
     padding: 10px;
 }
 
-.table th, .table td {
-    vertical-align: middle;
-}
+.table {
+    tr {
+        &.clickable {
+            cursor: pointer;
+        }
 
-tr.clickable {
-    cursor: pointer;
-}
+        &.selected {
+            background-color: #80FF80;
+        }
 
-tr.selected {
-    background-color: #80FF80;
+        th, td {
+            vertical-align: middle;
+        }
+
+        th {
+            &.id-column {
+                width: 15%;
+            }
+
+            &.name-column {
+                min-width: 30%;
+            }
+        }
+
+        td.no-players {
+            color: #555;
+            text-align: center;
+        }
+    }
 }
 
 .after-table {
     button {
         margin-bottom: 3px;
+        margin-right: 3px;
     }
 }

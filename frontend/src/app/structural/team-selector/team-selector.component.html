@@ -1,0 +1,10 @@
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-primary"
+        *ngFor="let team of teams; let i = index"
+        [class.active]="selectedTeam == i + 1"
+        (click)="selectTeam(i + 1)">
+
+        <input type="radio" name="options">
+        {{ i + 1 }}
+    </label>
+</div>

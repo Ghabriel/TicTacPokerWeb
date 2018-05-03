@@ -3,9 +3,15 @@ export enum PlayerStatus {
     IN_GAME = 'Em jogo'
 }
 
+export enum PlayerType {
+    HUMAN,
+    BOT
+}
+
 export interface Player {
     name: string;
     status: PlayerStatus;
+    type: PlayerType.HUMAN;
 }
 
 export enum GameMode {

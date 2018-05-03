@@ -1,3 +1,42 @@
-<p>
-    lobby-custom-game works!
-</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col" class="id-column">Time</th>
+            <th scope="col" class="name-column">Nome</th>
+            <th scope="col" class="action-column">Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let player of matchPlayers; let i = index">
+            <td>
+                <app-team-selector [initialTeam]="playerTeams[i]" (changeTeam)="changeTeam(i, $event)"></app-team-selector>
+            </td>
+
+            <ng-container *ngIf="i == 0">
+                <td class="player-name host-name">Você</td>
+                <td>
+                    <!-- <button class="btn btn-danger">cancelar</button> -->
+                </td>
+            </ng-container>
+
+            <ng-container *ngIf="i > 0">
+                <td class="player-name">{{ player.name }}</td>
+                <td>
+                    <button class="btn btn-danger">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </td>
+            </ng-container>
+        </tr>
+    </tbody>
+</table>
+
+<div class="add-bot">
+    <!-- <button type="button" class="btn btn-success" (click)="start()">Iniciar</button> -->
+    <button type="button" class="btn btn-primary" [class.disabled]="matchPlayers.length >= 4" (click)="addBot()">Adicionar Bot</button>
+</div>
+
+<div>
+    <button type="button" class="btn btn-success" (click)="start()">Iniciar</button>
+    <button type="button" class="btn btn-danger" (click)="cancel()">Cancelar</button>
+</div>

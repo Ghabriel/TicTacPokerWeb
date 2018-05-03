@@ -10,6 +10,7 @@ import { NetworkService } from './services/network.service';
 import { NavbarComponent } from './structural/navbar/navbar.component';
 import { LobbyUserListComponent } from './structural/lobby-user-list/lobby-user-list.component';
 import { LobbyCustomGameComponent } from './structural/lobby-custom-game/lobby-custom-game.component';
+import { TeamSelectorComponent } from './structural/team-selector/team-selector.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { LobbyCustomGameComponent } from './structural/lobby-custom-game/lobby-c
     HomeComponent,
     LobbyComponent,
     LobbyUserListComponent,
-    LobbyCustomGameComponent
+    LobbyCustomGameComponent,
+    TeamSelectorComponent
   ],
   imports: [
     AppRoutingModule,

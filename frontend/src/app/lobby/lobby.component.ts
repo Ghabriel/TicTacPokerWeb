@@ -10,6 +10,7 @@ import { Player } from './../types';
 })
 export class LobbyComponent implements OnInit {
     public customMatchMode: boolean = false;
+    public customMatchPlayers: Player[] = [];
 
     constructor() { }
 
@@ -18,8 +19,8 @@ export class LobbyComponent implements OnInit {
     }
 
     initCustomMatch(players: Player[]): void {
+        this.customMatchPlayers = players;
         this.customMatchMode = true;
-        console.log(players);
     }
 
     abortCustomMatch(): void {

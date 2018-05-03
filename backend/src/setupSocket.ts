@@ -22,14 +22,14 @@ export const setupSocket = (server: http.Server): void => {
             callback(encoded);
         });
 
-        socket.on('authentication', (token: Token, callback: Callback<boolean>) => {
+        socket.on('authentication', (token: Token, callback: Callback<string | null>) => {
             let name: string;
             try {
                 const decoded = jwt.verify(token, jwtSecret) as { name: string };
                 name = decoded.name;
             } catch (err) {
                 // console.log(err);
-                return callback(false);
+                return callback(null);
             }
 
             if (playerSockets.hasOwnProperty(name)) {
@@ -44,7 +44,7 @@ export const setupSocket = (server: http.Server): void => {
                 delete playerSockets[name];
             });
 
-            callback(true);
+            callback(name);
         });
     });
 };

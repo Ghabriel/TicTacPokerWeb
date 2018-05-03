@@ -4,5 +4,5 @@
     </header>
 
     <app-lobby-user-list *ngIf="!customMatchMode" (initCustom)="initCustomMatch($event)"></app-lobby-user-list>
-    <app-lobby-custom-game *ngIf="customMatchMode" (abortCustom)="abortCustomMatch()"></app-lobby-custom-game>
+    <app-lobby-custom-game *ngIf="customMatchMode" [players]="customMatchPlayers" (abortCustom)="abortCustomMatch()"></app-lobby-custom-game>
 </article>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 
-import { Player } from './../types';
+import { AnyPlayer, Player, TeamMapping } from './../types';
 
 @Injectable()
 export class NetworkService {
@@ -33,6 +33,10 @@ export class NetworkService {
 
     getOnlinePlayers(): Promise<Player[]> {
         return this.emit('getOnlinePlayers');
+    }
+
+    startGame(players: AnyPlayer[], teams: TeamMapping): Promise<boolean> {
+        return this.emit('startGame', players, teams);
     }
 
     private emit<T>(event: string, ...args: any[]): Promise<T> {

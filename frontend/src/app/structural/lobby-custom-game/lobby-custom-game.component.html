@@ -22,7 +22,7 @@
             <ng-container *ngIf="i > 0">
                 <td class="player-name">{{ player.name }}</td>
                 <td>
-                    <button class="btn btn-danger">
+                    <button class="btn btn-danger" (click)="remove(i)">
                         <i class="fa fa-times"></i>
                     </button>
                 </td>
@@ -37,6 +37,6 @@
 </div>
 
 <div>
-    <button type="button" class="btn btn-success" (click)="start()">Iniciar</button>
+    <button type="button" class="btn btn-success" [class.disabled]="!canStart" (click)="start()">Iniciar</button>
     <button type="button" class="btn btn-danger" (click)="cancel()">Cancelar</button>
 </div>

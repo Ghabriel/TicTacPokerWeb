@@ -1,6 +1,15 @@
+import { Game } from './Game';
 import * as socketio from 'socket.io';
 
-import { Player, PlayerStatus } from './types';
+import { AnyPlayer, Player, PlayerStatus, PlayerType, TeamMapping, Bot, GamePlayer } from './types';
+
+const isBot = (player: AnyPlayer): player is Bot => {
+    return player.type === PlayerType.BOT;
+};
+
+const isHuman = (player: AnyPlayer): player is Player => {
+    return player.type === PlayerType.HUMAN;
+};
 
 interface PlayerConnection {
     socketId: string;
@@ -12,6 +21,7 @@ type Callback<T> = (value: T) => void;
 
 export class SocketController {
     private static connectedPlayers: PlayerConnection[] = [];
+    private static games: Game[] = [];
 
     constructor(
         private io: socketio.Server,
@@ -26,18 +36,11 @@ export class SocketController {
         // console.log(`A user has connected. Users online: ${SocketController.connectedPlayers.length}`);
 
         socket.on('getOnlinePlayers', (callback: Callback<Player[]>) => {
-            const result: Player[] = [];
+            callback(this.getOnlinePlayers());
+        });
 
-            for (const player of SocketController.connectedPlayers) {
-                if (player.name != this.name) {
-                    result.push({
-                        name: player.name,
-                        status: player.status
-                    });
-                }
-            }
-
-            callback(result);
+        socket.on('startGame', (players: AnyPlayer[], teams: TeamMapping, callback: Callback<boolean>) => {
+            callback(this.startGame(players, teams));
         });
     }
 
@@ -56,5 +59,63 @@ export class SocketController {
         }
 
         // console.log(`A user has disconnected. Users online: ${SocketController.connectedPlayers.length}`);
+    }
+
+    private getOnlinePlayers(): Player[] {
+        const result: Player[] = [];
+
+        for (const player of SocketController.connectedPlayers) {
+            if (player.name != this.name) {
+                result.push({
+                    name: player.name,
+                    status: player.status,
+                    type: PlayerType.HUMAN
+                });
+            }
+        }
+
+        return result;
+    }
+
+    private startGame(players: AnyPlayer[], teams: TeamMapping): boolean {
+        // TODO: check if all players are available
+
+        const gamePlayers: GamePlayer[] = [];
+
+        for (let i = 0; i < players.length; i++) {
+            const player = players[i];
+            let gamePlayer: GamePlayer;
+
+            if (isHuman(player)) {
+                gamePlayer = {
+                    name: player.name,
+                    team: teams[i],
+                    type: PlayerType.HUMAN,
+                    socketId: this.socketIdOf(player.name)
+                };
+            } else {
+                gamePlayer = {
+                    name: player.name,
+                    team: teams[i],
+                    type: PlayerType.BOT
+                };
+            }
+
+            gamePlayers.push(gamePlayer);
+        }
+
+        const game = new Game(gamePlayers);
+        SocketController.games.push(game);
+        return true;
+    }
+
+    private socketIdOf(playerName: string): string {
+        for (const connection of SocketController.connectedPlayers) {
+            if (connection.name == playerName) {
+                return connection.socketId;
+            }
+        }
+
+        throw Error('Player not found');
     }
 }

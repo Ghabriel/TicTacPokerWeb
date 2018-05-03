@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { NetworkService } from './../../services/network.service';
-import { GameMode, Player, PlayerStatus } from './../../types';
+import { Player, PlayerStatus } from './../../types';
 
 @Component({
     selector: 'app-lobby-user-list',

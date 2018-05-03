@@ -14,9 +14,11 @@ export interface Player {
     type: PlayerType.HUMAN;
 }
 
-export enum GameMode {
-    '1x1',
-    '1x1x1',
-    '1x1x1x1',
-    '2x2'
+export interface Bot {
+    name: string;
+    type: PlayerType.BOT;
 }
+
+export type AnyPlayer = Player | Bot;
+
+export type TeamMapping = { [index: number]: number };

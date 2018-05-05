@@ -1,5 +1,5 @@
-import { Router } from '@angular/router';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { NetworkService } from './../../services/network.service';
 import { AnyPlayer, Bot, Player, PlayerStatus, PlayerType, TeamMapping } from './../../types';

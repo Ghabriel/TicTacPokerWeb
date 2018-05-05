@@ -90,6 +90,7 @@ export class SocketController {
                 gamePlayer = {
                     name: player.name,
                     team: teams[i],
+                    index: i,
                     type: PlayerType.HUMAN,
                     socketId: this.socketIdOf(player.name)
                 };
@@ -97,6 +98,7 @@ export class SocketController {
                 gamePlayer = {
                     name: player.name,
                     team: teams[i],
+                    index: i,
                     type: PlayerType.BOT
                 };
             }

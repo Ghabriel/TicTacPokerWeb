@@ -26,6 +26,7 @@ export type TeamMapping = { [index: number]: number };
 interface BaseGamePlayer {
     name: string;
     team: number;
+    index: number;
     type: PlayerType;
 }
 

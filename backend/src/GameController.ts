@@ -1,7 +1,6 @@
-import { BoardMatrix } from './../../frontend/src/app/types';
 import { TicTacPokerAchievementScheme } from './TicTacPokerAchievementScheme';
 import { Board } from './Board';
-import { Achievement, ScoreTable, AchievementScheme, Card, CardSuit, CardType, GamePlayer, PlayerType, GameData } from './types';
+import { Achievement, ScoreTable, AchievementScheme, Card, CardSuit, CardType, GamePlayer, PlayerType, GameData, BoardMatrix } from './types';
 
 const achievementScheme = new TicTacPokerAchievementScheme();
 
@@ -70,11 +69,13 @@ export class GameController {
 
         for (let rank = 1; rank <= 13; rank++) {
             for (const suit in CardSuit) {
-                result.push({
-                    rank: rank,
-                    suit: CardSuit[suit] as any as CardSuit,
-                    type: CardType.NORMAL
-                });
+                if (typeof CardSuit[suit] === 'number') {
+                    result.push({
+                        rank: rank,
+                        suit: CardSuit[suit] as any as CardSuit,
+                        type: CardType.NORMAL
+                    });
+                }
             }
         }
 

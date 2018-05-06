@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { NetworkService } from './../services/network.service';
 import { Player } from './../types';

@@ -46,6 +46,10 @@ export class SocketController {
         socket.on('getGameData', (callback: Callback<GameData | null>) => {
             callback(this.getGameData());
         });
+
+        socket.on('debug', (message: string) => {
+            console.log('[DEBUG]', message);
+        });
     }
 
     disconnect(): void {

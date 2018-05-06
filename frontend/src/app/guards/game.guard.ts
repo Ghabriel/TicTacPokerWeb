@@ -15,7 +15,11 @@ export class GameGuard implements CanActivate {
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Observable<boolean> | Promise<boolean> | boolean {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
+            if (await this.network.isLoggedIn()) {
+                return this.afterAuth(true, resolve);
+            }
+
             const token = sessionStorage.getItem('tic-tac-poker-token');
 
             if (token === null) {
@@ -23,21 +27,28 @@ export class GameGuard implements CanActivate {
                 return resolve(false);
             }
 
-            this.network.authenticate(token).then(success => {
-                if (!success) {
-                    this.router.navigate(['/']);
-                    return resolve(false);
-                }
+            const success = await this.network.authenticate(token);
+            this.afterAuth(success, resolve);
+        });
+    }
 
-                this.network.getGameData().then(data => {
-                    if (data === null) {
-                        this.router.navigate(['/lobby']);
-                        return resolve(false);
-                    }
+    private afterAuth(
+        success: boolean,
+        resolve: (value: boolean) => void
+    ): void {
+        if (!success) {
+            this.router.navigate(['/']);
+            return resolve(false);
+        }
 
-                    resolve(true);
-                });
-            });
+        this.network.getGameData().then(data => {
+            console.log('[GAME DATA]', data);
+            if (data === null) {
+                this.router.navigate(['/lobby']);
+                return resolve(false);
+            }
+
+            resolve(true);
         });
     }
 }

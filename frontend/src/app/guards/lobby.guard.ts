@@ -24,7 +24,12 @@ export class LobbyGuard implements CanActivate {
             }
 
             this.network.authenticate(token).then(success => {
-                resolve(success);
+                if (!success) {
+                    this.router.navigate(['/']);
+                    return resolve(false);
+                }
+
+                resolve(true);
             });
         });
     }

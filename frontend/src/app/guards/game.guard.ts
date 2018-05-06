@@ -42,7 +42,6 @@ export class GameGuard implements CanActivate {
         }
 
         this.network.getGameData().then(data => {
-            console.log('[GAME DATA]', data);
             if (data === null) {
                 this.router.navigate(['/lobby']);
                 return resolve(false);

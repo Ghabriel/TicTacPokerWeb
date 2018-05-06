@@ -1,3 +1,51 @@
-<p>
-    game works!
-</p>
+<div *ngIf="loading">Loading...</div>
+
+<div class="container" *ngIf="!loading">
+    <div class="row">
+        <ng-container *ngFor="let player of gameData.players; let i = index">
+            <div class="col-md-6">
+                <div class="player-info" [class.current-player]="i == 1">
+                    <div class="flex-container">
+                        <div class="auto-flex player-name">{{ player.name }}</div>
+                        <div class="fixed-flex score">2500</div>
+                    </div>
+                    <div class="achievements">
+                        <ul>
+                            <!-- TODO -->
+                            <!-- <li>Par</li>
+                            <li>Trinca</li>
+                            <li>Royal Straight Flush</li> -->
+                        </ul>
+                    </div>
+                    <div class="container board">
+                        <div class="row" *ngFor="let row of gameData.boards[i]">
+                            <div class="col-4 slot-wrapper" *ngFor="let card of row">
+                                <div class="game-card">
+                                    <ng-container *ngIf="card !== null">
+                                        <div class="rank">{{ card.rank }}</div>
+                                        <div class="suit {{ CardSuit[card.suit] }}"></div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 hand" *ngIf="i == 1">
+                <div class="container-fluid">
+                    <div class="row hand-row">
+                        <div class="col-2" *ngFor="let card of gameData.hand">
+                            <div class="game-card" *ngIf="card.type === CardType.NORMAL">
+                                <div class="rank">{{ card.rank }}</div>
+                                <div class="suit {{ CardSuit[card.suit] }}"></div>
+                            </div>
+                            <div class="game-card bandit" *ngIf="card.type === CardType.BANDIT"></div>
+                            <div class="game-card wildcard" *ngIf="card.type === CardType.WILDCARD"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

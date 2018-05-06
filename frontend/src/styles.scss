@@ -1,1 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "style_vars.scss";
+
+.game-card {
+    background-color: white;
+    border: $card-border solid black;
+    display: inline-block;
+    font-size: $card-font-size;
+    height: $card-height;
+    text-align: center;
+    width: $card-width;
+
+    &.bandit::before {
+        content: "HU3";
+    }
+
+    &.wildcard::before {
+        content: ":)";
+    }
+
+    .rank {
+        display: inline-block;
+        // flex: 1 1;
+    }
+
+    .suit {
+        background-repeat: no-repeat;
+        display: inline-block;
+        // flex: 1 1;
+        height: 32px;
+        width: 32px;
+
+        &.SPADES {
+            background-image: url('./assets/spades.png');
+        }
+
+        &.HEARTS {
+            background-image: url('./assets/hearts.png');
+        }
+
+        &.CLUBS {
+            background-image: url('./assets/clubs.png');
+        }
+
+        &.DIAMONDS {
+            background-image: url('./assets/diamonds.png');
+        }
+
+    }
+}

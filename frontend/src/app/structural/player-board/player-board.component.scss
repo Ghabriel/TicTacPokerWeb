@@ -1,0 +1,49 @@
+@import "../../../style_vars.scss";
+
+.flex-container {
+    display: flex;
+
+    .auto-flex {
+        flex: 1 1;
+    }
+
+    .fixed-flex {
+        flex: 0 0 auto;
+    }
+}
+
+.player-info {
+    background-color: #ddd;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: inline-block;
+    margin-bottom: $section-margin;
+    padding: $player-info-padding-y $player-info-padding-x;
+    width: 2 * ($card-border + $player-info-padding-x) + 6 * $player-info-slot-padding + 3 * $card-width;
+
+    &.current-player {
+        background-color: #ff8;
+
+        .player-name {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+    }
+
+    .score {
+        font-weight: bold;
+    }
+
+    .achievements {
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+    }
+
+    .board {
+        .slot-wrapper {
+            padding: 2px;
+        }
+    }
+}

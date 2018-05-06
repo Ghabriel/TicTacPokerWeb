@@ -12,6 +12,7 @@ import { NetworkService } from './services/network.service';
 import { LobbyCustomGameComponent } from './structural/lobby-custom-game/lobby-custom-game.component';
 import { LobbyUserListComponent } from './structural/lobby-user-list/lobby-user-list.component';
 import { NavbarComponent } from './structural/navbar/navbar.component';
+import { PlayerBoardComponent } from './structural/player-board/player-board.component';
 import { TeamSelectorComponent } from './structural/team-selector/team-selector.component';
 
 @NgModule({
@@ -23,7 +24,8 @@ import { TeamSelectorComponent } from './structural/team-selector/team-selector.
     LobbyUserListComponent,
     LobbyCustomGameComponent,
     TeamSelectorComponent,
-    GameComponent
+    GameComponent,
+    PlayerBoardComponent
   ],
   imports: [
     AppRoutingModule,

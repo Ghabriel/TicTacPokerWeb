@@ -1,103 +1,14 @@
-.container {
-    margin-top: 3px;
-}
+@import "../../style_vars.scss";
 
-.flex-container {
-    display: flex;
-
-    .auto-flex {
-        flex: 1 1;
-    }
-
-    .fixed-flex {
-        flex: 0 0 auto;
-    }
-}
-
-$card-height: 60px;
-$card-font-size: 40px;
-$section-margin: 5px;
-
-.player-info {
-    background-color: #ddd;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin-bottom: $section-margin;
-    padding: 3px 5px;
-
-    &.current-player {
-        background-color: #ff8;
-    }
-
-    .score {
-        font-weight: bold;
-    }
-
-    .achievements {
-        ul {
-            list-style-type: none;
-            padding-left: 20px;
-        }
-    }
-
-    .board {
-        .slot-wrapper {
-            padding: 2px;
-        }
-    }
-}
-
-.game-card {
-    background-color: white;
-    border: 1px solid black;
-    // display: flex;
-    font-size: $card-font-size;
-    height: $card-height;
-    text-align: center;
-
-    &.bandit::before {
-        content: "HU3";
-    }
-
-    &.wildcard::before {
-        content: ":)";
-    }
-
-    .rank {
-        display: inline-block;
-        // flex: 1 1;
-    }
-
-    .suit {
-        background-repeat: no-repeat;
-        display: inline-block;
-        // flex: 1 1;
-        height: 32px;
-        width: 32px;
-
-        &.SPADES {
-            background-image: url('../../assets/spades.png');
-        }
-
-        &.HEARTS {
-            background-image: url('../../assets/hearts.png');
-        }
-
-        &.CLUBS {
-            background-image: url('../../assets/clubs.png');
-        }
-
-        &.DIAMONDS {
-            background-image: url('../../assets/diamonds.png');
-        }
-
-    }
+.game-container {
+    padding-left: 5px;
+    padding-top: 3px;
 }
 
 .hand {
     margin-bottom: $section-margin;
 
-    .hand-row {
-        justify-content: space-evenly;
-    }
+    // .hand-row {
+    //     justify-content: space-evenly;
+    // }
 }

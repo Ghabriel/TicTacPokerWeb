@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { CardType } from './../../../../backend/src/types';
 import { NetworkService } from './../services/network.service';
-import { CardSuit, GameData } from './../types';
+import { CardSuit, CardType, GameData } from './../types';
 
 @Component({
     selector: 'app-game',

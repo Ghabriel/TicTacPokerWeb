@@ -1,7 +1,7 @@
 import { Game } from './Game';
 import * as socketio from 'socket.io';
 
-import { AnyPlayer, Player, PlayerStatus, PlayerType, TeamMapping, Bot, GamePlayer } from './types';
+import { AnyPlayer, Player, PlayerStatus, PlayerType, TeamMapping, Bot, GamePlayer, GameData } from './types';
 
 const isBot = (player: AnyPlayer): player is Bot => {
     return player.type === PlayerType.BOT;
@@ -41,6 +41,10 @@ export class SocketController {
 
         socket.on('startGame', (players: AnyPlayer[], teams: TeamMapping, callback: Callback<boolean>) => {
             callback(this.startGame(players, teams));
+        });
+
+        socket.on('getGameData', (callback: Callback<GameData | null>) => {
+            callback(this.getGameData());
         });
     }
 
@@ -119,5 +123,15 @@ export class SocketController {
         }
 
         throw Error('Player not found');
+    }
+
+    private getGameData(): GameData | null {
+        for (const game of SocketController.games) {
+            if (game.hasHumanPlayer(this.name)) {
+                return game.getData();
+            }
+        }
+
+        return null;
     }
 }

@@ -1,5 +1,5 @@
-import { AchievementScheme, BoardRow, Achievement, NormalCard, CardSuit } from './GameTypes';
 import { ranksOf, suitsOf, isRankSequence } from './CardUtils';
+import { AchievementScheme, BoardRow, Achievement, NormalCard, CardSuit } from './types';
 
 export class TicTacPokerAchievementScheme implements AchievementScheme {
     analyse(row: BoardRow): Achievement[] {

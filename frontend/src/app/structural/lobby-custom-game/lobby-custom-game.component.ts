@@ -75,7 +75,6 @@ export class LobbyCustomGameComponent implements OnInit {
     }
 
     private refreshStartButton(): void {
-        console.log(this.playerTeams);
         const playersPerTeam: number[] = [0, 0, 0, 0];
 
         for (const index in this.playerTeams) {
@@ -108,7 +107,12 @@ export class LobbyCustomGameComponent implements OnInit {
         }
 
         this.network.startGame(this.matchPlayers, this.playerTeams).then(success => {
-            this.router.navigate(['/game']);
+            if (success) {
+                this.router.navigate(['/game']);
+            } else {
+                // TODO: show error message
+                console.log('Failed to start game.');
+            }
         });
     }
 

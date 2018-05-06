@@ -1,7 +1,7 @@
+import { BoardMatrix } from './../../frontend/src/app/types';
 import { TicTacPokerAchievementScheme } from './TicTacPokerAchievementScheme';
 import { Board } from './Board';
-import { Achievement, ScoreTable, AchievementScheme, Card, CardSuit, CardType } from './GameTypes';
-import { GamePlayer, PlayerType } from './types';
+import { Achievement, ScoreTable, AchievementScheme, Card, CardSuit, CardType, GamePlayer, PlayerType, GameData } from './types';
 
 const achievementScheme = new TicTacPokerAchievementScheme();
 
@@ -47,6 +47,22 @@ export class GameController {
         for (let i = 0; i < numCardsInHand; i++) {
             this.draw();
         }
+    }
+
+    getData(): GameData {
+        const boards: { [index: number]: BoardMatrix } = {};
+
+        for (const index in this.boards) {
+            if (this.boards.hasOwnProperty(index)) {
+                boards[index] = this.boards[index].getMatrix();
+            }
+        }
+
+        return {
+            players: this.players,
+            boards: boards,
+            hand: this.hand
+        };
     }
 
     private generateDeck(): Card[] {

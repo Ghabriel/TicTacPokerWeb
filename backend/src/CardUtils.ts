@@ -1,4 +1,4 @@
-import { NormalCard, CardSuit } from './GameTypes';
+import { NormalCard, CardSuit } from './types';
 
 export const ranksOf = (cards: NormalCard[]): Set<number> => {
     return new Set(cards.map(c => c.rank).sort());

@@ -1,4 +1,4 @@
-import { Achievement, AchievementScheme, BoardMatrix, BoardRow, ScoreTable } from './GameTypes';
+import { Achievement, AchievementScheme, BoardMatrix, BoardRow, ScoreTable } from './types';
 
 export class Board {
     private rows: BoardMatrix;
@@ -17,6 +17,10 @@ export class Board {
             this.rows.push(Array(size).fill(null));
             this.columns.push(Array(size).fill(null));
         }
+    }
+
+    getMatrix(): BoardMatrix {
+        return this.rows;
     }
 
     getScore(): number {
@@ -47,7 +51,7 @@ export class Board {
         return this.score;
     }
 
-    getDiagonals(): BoardRow[] {
+    private getDiagonals(): BoardRow[] {
         const rows = this.rows;
         return [
             [rows[0][0], rows[1][1], rows[2][2]],

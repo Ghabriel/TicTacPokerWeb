@@ -11,6 +11,7 @@ import { NavbarComponent } from './structural/navbar/navbar.component';
 import { LobbyUserListComponent } from './structural/lobby-user-list/lobby-user-list.component';
 import { LobbyCustomGameComponent } from './structural/lobby-custom-game/lobby-custom-game.component';
 import { TeamSelectorComponent } from './structural/team-selector/team-selector.component';
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TeamSelectorComponent } from './structural/team-selector/team-selector.
     LobbyComponent,
     LobbyUserListComponent,
     LobbyCustomGameComponent,
-    TeamSelectorComponent
+    TeamSelectorComponent,
+    GameComponent
   ],
   imports: [
     AppRoutingModule,

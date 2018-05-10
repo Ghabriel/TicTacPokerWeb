@@ -16,7 +16,7 @@
     background-color: #ddd;
     border: 1px solid black;
     border-radius: 5px;
-    display: inline-block;
+    // display: inline-block;
     margin-bottom: $section-margin;
     padding: $player-info-padding-y $player-info-padding-x;
     width: 2 * ($card-border + $player-info-padding-x) + 6 * $player-info-slot-padding + 3 * $card-width;
@@ -43,7 +43,8 @@
 
     .board {
         .slot-wrapper {
-            padding: 2px;
+            // padding: 2px;
+            padding: 0;
         }
     }
 }

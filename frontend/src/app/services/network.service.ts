@@ -3,13 +3,35 @@ import * as io from 'socket.io-client';
 
 import { AnyPlayer, GameData, Player, TeamMapping } from './../types';
 
+type OnlineListObserver = (name: Player[]) => void;
+
 @Injectable()
 export class NetworkService {
     private socket: SocketIOClient.Socket;
     private username: string | null = null;
+    private loginObservers: { [handle: number]: OnlineListObserver } = {};
+    private nextLoginHandle: number = 0;
 
     constructor() {
         this.socket = io.connect();
+
+        this.socket.on('onlineListChange', (onlineList: Player[]) => {
+            for (const handle in this.loginObservers) {
+                if (this.loginObservers.hasOwnProperty(handle)) {
+                    this.loginObservers[handle](onlineList);
+                }
+            }
+        });
+    }
+
+    addOnlineListObserver(callback: OnlineListObserver): number {
+        this.loginObservers[this.nextLoginHandle] = callback;
+        this.nextLoginHandle++;
+        return this.nextLoginHandle - 1;
+    }
+
+    removeOnlineListObserver(handle: number): void {
+        delete this.loginObservers[handle];
     }
 
     login(name: string): Promise<string | null> {

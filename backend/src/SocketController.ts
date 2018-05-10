@@ -50,6 +50,8 @@ export class SocketController {
         socket.on('debug', (message: string) => {
             console.log('[DEBUG]', message);
         });
+
+        this.broadcastOnlineList();
     }
 
     disconnect(): void {
@@ -67,22 +69,25 @@ export class SocketController {
         }
 
         // console.log(`A user has disconnected. Users online: ${SocketController.connectedPlayers.length}`);
+        this.broadcastOnlineList();
     }
 
     private getOnlinePlayers(): Player[] {
         const result: Player[] = [];
 
         for (const player of SocketController.connectedPlayers) {
-            if (player.name != this.name) {
-                result.push({
-                    name: player.name,
-                    status: player.status,
-                    type: PlayerType.HUMAN
-                });
-            }
+            result.push({
+                name: player.name,
+                status: player.status,
+                type: PlayerType.HUMAN
+            });
         }
 
         return result;
+    }
+
+    private broadcastOnlineList(): void {
+        this.socket.broadcast.emit('onlineListChange', this.getOnlinePlayers());
     }
 
     private startGame(players: AnyPlayer[], teams: TeamMapping): boolean {

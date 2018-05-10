@@ -5,10 +5,26 @@
     padding-top: 3px;
 }
 
-.hand {
-    margin-bottom: $section-margin;
+.row {
+    margin: 0;
+}
 
-    // .hand-row {
-    //     justify-content: space-evenly;
-    // }
+.fixed-column {
+    flex: 0 0 auto;
+}
+
+$hand-margin: 10px;
+
+.hand {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: $section-margin;
+    margin-left: $hand-margin;
+    margin-right: $hand-margin;
+
+    .game-card {
+        display: block;
+        margin-bottom: 3px;
+    }
 }

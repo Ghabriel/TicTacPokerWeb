@@ -2,20 +2,12 @@
 
 <div class="container-fluid game-container" *ngIf="!loading">
     <div class="row">
-        <div class="col-12">
-            <app-player-board
-                [player]="gameData.players[0]"
-                [board]="gameData.boards[0]"
-                [isCurrentPlayer]="false"></app-player-board>
-
-                <app-player-board
-                [player]="gameData.players[1]"
-                [board]="gameData.boards[1]"
-                [isCurrentPlayer]="true"></app-player-board>
+        <div class="fixed-column">
+            <app-player-board [player]="gameData.players[0]" [board]="gameData.boards[0]" [isCurrentPlayer]="false"></app-player-board>
+            <app-player-board [player]="gameData.players[2]" [board]="gameData.boards[2]" [isCurrentPlayer]="false"></app-player-board>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12 hand">
+
+        <div class="fixed-column hand">
             <ng-container *ngFor="let card of gameData.hand">
                 <div class="game-card" *ngIf="card.type === CardType.NORMAL">
                     <div class="rank">{{ card.rank }}</div>
@@ -24,6 +16,11 @@
                 <div class="game-card bandit" *ngIf="card.type === CardType.BANDIT"></div>
                 <div class="game-card wildcard" *ngIf="card.type === CardType.WILDCARD"></div>
             </ng-container>
+        </div>
+
+        <div class="fixed-column">
+            <app-player-board [player]="gameData.players[3]" [board]="gameData.boards[3]" [isCurrentPlayer]="true"></app-player-board>
+            <app-player-board [player]="gameData.players[1]" [board]="gameData.boards[1]" [isCurrentPlayer]="false"></app-player-board>
         </div>
     </div>
 </div>

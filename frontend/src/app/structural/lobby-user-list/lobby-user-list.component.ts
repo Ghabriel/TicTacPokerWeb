@@ -14,6 +14,7 @@ export class LobbyUserListComponent implements OnInit {
     public loading: boolean = true;
     public customMatchMode: boolean = false;
     public selectedPlayerIndexes: Set<number> = new Set();
+    public username: string;
 
     public readonly PlayerStatus = PlayerStatus;
 
@@ -25,9 +26,23 @@ export class LobbyUserListComponent implements OnInit {
         this.customMatchMode = false;
         this.selectedPlayerIndexes.clear();
 
-        this.network.getOnlinePlayers().then(players => {
-            this.players = players;
-            this.loading = false;
+        this.network.getUsername().then(name => {
+            if (name === null) {
+                // can't happen because there's a lobby guard.
+                alert('Erro interno. Contate o administrador.');
+                return;
+            }
+
+            this.username = name;
+
+            this.network.getOnlinePlayers().then(players => {
+                this.players = players;
+                this.loading = false;
+            });
+
+            this.network.addOnlineListObserver(list => {
+                this.players = list;
+            });
         });
     }
 

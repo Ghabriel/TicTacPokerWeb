@@ -90,4 +90,5 @@ export interface GameData {
     players: GamePlayer[];
     boards: { [index: number]: BoardMatrix };
     hand: Card[];
+    currentPlayerIndex: number;
 }

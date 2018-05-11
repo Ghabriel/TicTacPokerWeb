@@ -23,6 +23,7 @@ export class GameController {
     private boards: { [index: number]: Board };
     private deck: Card[];
     private hand: Card[];
+    private currentPlayerIndex: number;
 
     constructor(players: GamePlayer[]) {
         this.players = players;
@@ -30,9 +31,10 @@ export class GameController {
         this.boards = {};
         this.deck = this.generateDeck();
         this.hand = [];
+        this.currentPlayerIndex = 0;
 
         for (const player of players) {
-            if (player.type == PlayerType.HUMAN) {
+            if (player.type === PlayerType.HUMAN) {
                 this.nameMapping[player.name] = player;
             }
 
@@ -60,7 +62,8 @@ export class GameController {
         return {
             players: this.players,
             boards: boards,
-            hand: this.hand
+            hand: this.hand,
+            currentPlayerIndex: this.currentPlayerIndex
         };
     }
 

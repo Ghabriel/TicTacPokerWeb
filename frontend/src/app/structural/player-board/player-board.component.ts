@@ -10,6 +10,7 @@ import { BoardMatrix, CardSuit, CardType, GamePlayer } from './../../types';
 export class PlayerBoardComponent implements OnInit {
     @Input() player: GamePlayer;
     @Input() board: BoardMatrix;
+    @Input() isLocalPlayer: boolean;
     @Input() isCurrentPlayer: boolean;
 
     public readonly CardType = CardType;

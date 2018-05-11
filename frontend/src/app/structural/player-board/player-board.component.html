@@ -1,6 +1,7 @@
 <div class="player-info" [class.current-player]="isCurrentPlayer">
     <div class="flex-container">
-        <div class="auto-flex player-name">{{ player.name }}</div>
+        <div class="auto-flex player-name" *ngIf="!isLocalPlayer">{{ player.name }}</div>
+        <div class="auto-flex player-name local-player" *ngIf="isLocalPlayer">Você</div>
         <div class="fixed-flex score">0</div>
     </div>
     <div class="achievements">

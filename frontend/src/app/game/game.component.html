@@ -3,8 +3,16 @@
 <div class="container-fluid game-container" *ngIf="!loading">
     <div class="row">
         <div class="fixed-column">
-            <app-player-board [player]="gameData.players[0]" [board]="gameData.boards[0]" [isCurrentPlayer]="false"></app-player-board>
-            <app-player-board [player]="gameData.players[2]" [board]="gameData.boards[2]" [isCurrentPlayer]="false"></app-player-board>
+            <app-player-board
+                [isLocalPlayer]="localPlayer === 0"
+                [player]="gameData.players[0]"
+                [board]="gameData.boards[0]"
+                [isCurrentPlayer]="gameData.currentPlayerIndex === 0"></app-player-board>
+            <app-player-board *ngIf="gameData.players.length >= 3"
+                [isLocalPlayer]="localPlayer === 2"
+                [player]="gameData.players[2]"
+                [board]="gameData.boards[2]"
+                [isCurrentPlayer]="gameData.currentPlayerIndex === 2"></app-player-board>
         </div>
 
         <div class="fixed-column hand">
@@ -19,8 +27,16 @@
         </div>
 
         <div class="fixed-column">
-            <app-player-board [player]="gameData.players[3]" [board]="gameData.boards[3]" [isCurrentPlayer]="true"></app-player-board>
-            <app-player-board [player]="gameData.players[1]" [board]="gameData.boards[1]" [isCurrentPlayer]="false"></app-player-board>
+            <app-player-board *ngIf="gameData.players.length >= 4"
+                [isLocalPlayer]="localPlayer === 3"
+                [player]="gameData.players[3]"
+                [board]="gameData.boards[3]"
+                [isCurrentPlayer]="gameData.currentPlayerIndex === 3"></app-player-board>
+            <app-player-board
+                [isLocalPlayer]="localPlayer === 1"
+                [player]="gameData.players[1]"
+                [board]="gameData.boards[1]"
+                [isCurrentPlayer]="gameData.currentPlayerIndex === 1"></app-player-board>
         </div>
     </div>
 </div>

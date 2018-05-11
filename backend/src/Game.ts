@@ -1,5 +1,5 @@
 import { GameController } from './GameController';
-import { GamePlayer, PlayerType, GameData } from './types';
+import { GamePlayer, PlayerType, GameData, GameMove } from './types';
 
 export class Game {
     private players: GamePlayer[];
@@ -27,5 +27,9 @@ export class Game {
 
     getData(): GameData {
         return this.controller.getData();
+    }
+
+    processMove(move: GameMove): void {
+        this.controller.processMove(move);
     }
 }

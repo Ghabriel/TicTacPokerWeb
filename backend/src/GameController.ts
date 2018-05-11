@@ -1,6 +1,7 @@
+import { isSameCard } from './CardUtils';
 import { TicTacPokerAchievementScheme } from './TicTacPokerAchievementScheme';
 import { Board } from './Board';
-import { Achievement, ScoreTable, AchievementScheme, Card, CardSuit, CardType, GamePlayer, PlayerType, GameData, BoardMatrix } from './types';
+import { Achievement, ScoreTable, AchievementScheme, Card, CardSuit, CardType, GamePlayer, PlayerType, GameData, BoardMatrix, GameMove, NormalCard } from './types';
 
 const achievementScheme = new TicTacPokerAchievementScheme();
 
@@ -65,6 +66,33 @@ export class GameController {
             hand: this.hand,
             currentPlayerIndex: this.currentPlayerIndex
         };
+    }
+
+    processMove(move: GameMove): void {
+        const board = this.boards[this.currentPlayerIndex];
+        const card = this.hand[move.cardIndex];
+
+        this.hand.splice(move.cardIndex, 1);
+        this.draw();
+
+        switch (move.type) {
+            case CardType.NORMAL:
+                board.set(move.row, move.column, card as NormalCard);
+                break;
+            case CardType.BANDIT:
+                const stolenBoard = this.boards[move.stolenPlayerIndex];
+                const stolenCard = stolenBoard.steal(move.stolenRow, move.stolenColumn);
+
+                if (stolenCard === null) {
+                    throw Error('Illegal move');
+                }
+
+                board.set(move.row, move.column, stolenCard);
+                break;
+            case CardType.WILDCARD:
+                board.set(move.row, move.column, move.chosenCard);
+                break;
+        }
     }
 
     private generateDeck(): Card[] {

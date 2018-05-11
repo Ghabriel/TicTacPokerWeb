@@ -92,3 +92,28 @@ export interface GameData {
     hand: Card[];
     currentPlayerIndex: number;
 }
+
+interface BaseGameMove {
+    row: number;
+    column: number;
+    cardIndex: number;
+    type: CardType;
+}
+
+export interface GameNormalMove extends BaseGameMove {
+    type: CardType.NORMAL;
+}
+
+export interface GameBanditMove extends BaseGameMove {
+    stolenPlayerIndex: number;
+    stolenRow: number;
+    stolenColumn: number;
+    type: CardType.BANDIT;
+}
+
+export interface GameWildcardMove extends BaseGameMove {
+    chosenCard: NormalCard;
+    type: CardType.WILDCARD;
+}
+
+export type GameMove = GameNormalMove | GameBanditMove | GameWildcardMove;

@@ -54,7 +54,9 @@ export class GameComponent implements OnInit {
     }
 
     play(move: GameMove): void {
-        console.log('[MOVE]', move);
+        this.network.sendMove(move).then(gameData => {
+            this.gameData = gameData;
+        });
     }
 
 }

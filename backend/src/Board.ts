@@ -1,4 +1,4 @@
-import { Achievement, AchievementScheme, BoardMatrix, BoardRow, ScoreTable } from './types';
+import { Achievement, AchievementScheme, BoardMatrix, BoardRow, ScoreTable, NormalCard } from './types';
 
 export class Board {
     private rows: BoardMatrix;
@@ -49,6 +49,22 @@ export class Board {
         this.achievements = achievements;
 
         return this.score;
+    }
+
+    set(row: number, column: number, card: NormalCard): void {
+        this.internalSet(row, column, card);
+    }
+
+    steal(row: number, column: number): NormalCard | null {
+        const card = this.rows[row][column];
+        this.internalSet(row, column, null);
+        return card;
+    }
+
+    private internalSet(row: number, column: number, card: NormalCard | null): void {
+        this.rows[row][column] = card;
+        this.columns[column][row] = card;
+        this.score = null;
     }
 
     private getDiagonals(): BoardRow[] {

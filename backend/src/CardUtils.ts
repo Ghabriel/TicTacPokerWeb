@@ -1,4 +1,12 @@
-import { NormalCard, CardSuit } from './types';
+import { NormalCard, CardSuit, Card, CardType } from './types';
+
+export const isSameCard = (first: Card, second: Card): boolean => {
+    if (first.type === CardType.NORMAL && second.type === CardType.NORMAL) {
+        return first.rank === second.rank && first.suit === second.suit;
+    }
+
+    return first.type === second.type;
+}
 
 export const ranksOf = (cards: NormalCard[]): Set<number> => {
     return new Set(cards.map(c => c.rank).sort());

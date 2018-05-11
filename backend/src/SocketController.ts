@@ -1,7 +1,7 @@
 import { Game } from './Game';
 import * as socketio from 'socket.io';
 
-import { AnyPlayer, Player, PlayerStatus, PlayerType, TeamMapping, Bot, GamePlayer, GameData } from './types';
+import { AnyPlayer, Player, PlayerStatus, PlayerType, TeamMapping, Bot, GamePlayer, GameData, GameMove } from './types';
 
 const isBot = (player: AnyPlayer): player is Bot => {
     return player.type === PlayerType.BOT;
@@ -45,6 +45,10 @@ export class SocketController {
 
         socket.on('getGameData', (callback: Callback<GameData | null>) => {
             callback(this.getGameData());
+        });
+
+        socket.on('gameMove', (move: GameMove, callback: Callback<GameData>) => {
+            callback(this.gameMove(move));
         });
 
         socket.on('debug', (message: string) => {
@@ -135,12 +139,34 @@ export class SocketController {
     }
 
     private getGameData(): GameData | null {
+        const game = this.game();
+
+        if (game === null) {
+            return null;
+        }
+
+        return game.getData();
+    }
+
+    private game(): Game | null {
         for (const game of SocketController.games) {
             if (game.hasHumanPlayer(this.name)) {
-                return game.getData();
+                return game;
             }
         }
 
         return null;
+    }
+
+    private gameMove(move: GameMove): GameData {
+        const game = this.game();
+
+        if (game === null) {
+            // shouldn't happen
+            throw Error('Invalid application state');
+        }
+
+        game.processMove(move);
+        return game.getData();
     }
 }

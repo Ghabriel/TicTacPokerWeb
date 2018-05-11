@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 
-import { AnyPlayer, GameData, Player, TeamMapping } from './../types';
+import { AnyPlayer, GameData, Player, TeamMapping, GameMove } from './../types';
 
 type OnlineListObserver = (name: Player[]) => void;
 
@@ -63,6 +63,10 @@ export class NetworkService {
 
     getGameData(): Promise<GameData | null> {
         return this.emit('getGameData');
+    }
+
+    sendMove(move: GameMove): Promise<GameData> {
+        return this.emit('gameMove', move);
     }
 
     debug(message: string): void {

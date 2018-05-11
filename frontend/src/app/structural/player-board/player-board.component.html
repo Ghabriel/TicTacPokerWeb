@@ -13,13 +13,12 @@
         </ul>
     </div>
     <div class="container board">
-        <div class="row" *ngFor="let row of board">
-            <div class="col-4 slot-wrapper" *ngFor="let card of row">
-                <div class="game-card">
-                    <ng-container *ngIf="card !== null">
-                        <div class="rank">{{ card.rank }}</div>
-                        <div class="suit {{ CardSuit[card.suit] }}"></div>
-                    </ng-container>
+        <div class="row" *ngFor="let row of board; let i = index">
+            <div class="col-4 slot-wrapper" *ngFor="let card of row; let j = index">
+                <div class="game-card" *ngIf="card === null" droppable (onDrop)="process(i, j, $event)"></div>
+                <div class="game-card" *ngIf="card !== null">
+                    <div class="rank">{{ card.rank }}</div>
+                    <div class="suit {{ CardSuit[card.suit] }}"></div>
                 </div>
             </div>
         </div>

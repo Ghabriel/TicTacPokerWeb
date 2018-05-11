@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { Ng2DragDropModule } from 'ng2-drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,7 +30,8 @@ import { TeamSelectorComponent } from './structural/team-selector/team-selector.
   ],
   imports: [
     AppRoutingModule,
-    BrowserModule
+    BrowserModule,
+    Ng2DragDropModule.forRoot()
   ],
   providers: [
     GameGuard,

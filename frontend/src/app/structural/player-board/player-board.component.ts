@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 
-import { BoardMatrix, CardSuit, CardType, GamePlayer } from './../../types';
+import { BoardMatrix, Card, CardSuit, CardType, GamePlayer, GameMove } from './../../types';
+import { DropEvent } from 'ng2-drag-drop';
 
 @Component({
     selector: 'app-player-board',
@@ -12,6 +13,7 @@ export class PlayerBoardComponent implements OnInit {
     @Input() board: BoardMatrix;
     @Input() isLocalPlayer: boolean;
     @Input() isCurrentPlayer: boolean;
+    @Output() play = new EventEmitter<GameMove>();
 
     public readonly CardType = CardType;
     public readonly CardSuit = CardSuit;
@@ -19,6 +21,18 @@ export class PlayerBoardComponent implements OnInit {
     constructor() { }
 
     ngOnInit() {
+    }
+
+    process(row: number, column: number, event: DropEvent): void {
+        if (this.isLocalPlayer && this.isCurrentPlayer) {
+            const move: GameMove = {
+                row,
+                column,
+                card: event.dragData
+            };
+
+            this.play.emit(move);
+        }
     }
 
 }

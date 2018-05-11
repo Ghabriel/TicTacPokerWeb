@@ -92,3 +92,9 @@ export interface GameData {
     hand: Card[];
     currentPlayerIndex: number;
 }
+
+export interface GameMove {
+    row: number;
+    column: number;
+    card: Card;
+}

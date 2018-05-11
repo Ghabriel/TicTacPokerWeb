@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NetworkService } from './../services/network.service';
-import { CardSuit, CardType, GameData, PlayerType } from './../types';
+import { CardSuit, CardType, GameData, GameMove, PlayerType } from './../types';
 
 @Component({
     selector: 'app-game',
@@ -51,6 +51,10 @@ export class GameComponent implements OnInit {
                 break;
             }
         });
+    }
+
+    play(move: GameMove): void {
+        console.log('[MOVE]', move);
     }
 
 }

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
 
-import { AnyPlayer, GameData, Player, TeamMapping, GameMove } from './../types';
+import { AnyPlayer, GameData, GameMove, Player, TeamMapping } from './../types';
 
 type OnlineListObserver = (name: Player[]) => void;
+type GameDataObserver = (data: GameData) => void;
 
 @Injectable()
 export class NetworkService {
@@ -11,6 +12,8 @@ export class NetworkService {
     private username: string | null = null;
     private loginObservers: { [handle: number]: OnlineListObserver } = {};
     private nextLoginHandle: number = 0;
+    private gameDataObservers: { [handle: number]: GameDataObserver } = {};
+    private nextGameHandle: number = 0;
 
     constructor() {
         this.socket = io.connect();
@@ -19,6 +22,14 @@ export class NetworkService {
             for (const handle in this.loginObservers) {
                 if (this.loginObservers.hasOwnProperty(handle)) {
                     this.loginObservers[handle](onlineList);
+                }
+            }
+        });
+
+        this.socket.on('gameDataChange', (data: GameData) => {
+            for (const handle in this.gameDataObservers) {
+                if (this.gameDataObservers.hasOwnProperty(handle)) {
+                    this.gameDataObservers[handle](data);
                 }
             }
         });
@@ -67,6 +78,16 @@ export class NetworkService {
 
     sendMove(move: GameMove): Promise<GameData> {
         return this.emit('gameMove', move);
+    }
+
+    addGameDataObserver(callback: GameDataObserver): number {
+        this.gameDataObservers[this.nextGameHandle] = callback;
+        this.nextGameHandle++;
+        return this.nextGameHandle - 1;
+    }
+
+    removeGameDataObserver(handle: number): void {
+        delete this.gameDataObservers[handle];
     }
 
     debug(message: string): void {

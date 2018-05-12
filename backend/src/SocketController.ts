@@ -167,6 +167,11 @@ export class SocketController {
         }
 
         game.processMove(move);
+        this.broadcastGameData();
         return game.getData();
+    }
+
+    private broadcastGameData(): void {
+        this.socket.broadcast.emit('gameDataChange', this.getGameData());
     }
 }

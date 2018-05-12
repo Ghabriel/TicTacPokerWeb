@@ -15,8 +15,8 @@ const scoreTable: ScoreTable = {
 };
 
 const numCardsInHand: number = 5;
-const numBandits: number = 4;
-const numWildcards: number = 4;
+const numBandits: number = 0;
+const numWildcards: number = 0;
 
 export class GameController {
     private players: GamePlayer[];
@@ -80,6 +80,7 @@ export class GameController {
                 board.set(move.row, move.column, card as NormalCard);
                 break;
             case CardType.BANDIT:
+                // TODO: allow the stolen player to play twice in his next turn
                 const stolenBoard = this.boards[move.stolenPlayerIndex];
                 const stolenCard = stolenBoard.steal(move.stolenRow, move.stolenColumn);
 
@@ -93,6 +94,8 @@ export class GameController {
                 board.set(move.row, move.column, move.chosenCard);
                 break;
         }
+
+        this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
     }
 
     private generateDeck(): Card[] {

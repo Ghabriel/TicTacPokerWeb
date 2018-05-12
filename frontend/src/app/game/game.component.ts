@@ -51,6 +51,10 @@ export class GameComponent implements OnInit {
                 break;
             }
         });
+
+        this.network.addGameDataObserver(gameData => {
+            this.gameData = gameData;
+        });
     }
 
     play(move: GameMove): void {

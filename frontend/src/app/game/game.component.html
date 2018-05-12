@@ -18,8 +18,8 @@
         </div>
 
         <div class="fixed-column hand">
-            <ng-container *ngFor="let card of gameData.hand">
-                <div class="game-card" draggable [dragData]="card"
+            <ng-container *ngFor="let card of gameData.hand; let i = index">
+                <div class="game-card" draggable [dragData]="i"
                     [class.bandit]="card.type === CardType.BANDIT" [class.wildcard]="card.type === CardType.WILDCARD">
                     <ng-container *ngIf="card.type === CardType.NORMAL">
                         <div class="rank">{{ card.rank }}</div>

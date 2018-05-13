@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { cardRanks } from './../constants';
 import { NetworkService } from './../services/network.service';
 import { CardSuit, CardType, GameData, GameMove, PlayerType } from './../types';
 
@@ -14,6 +15,7 @@ export class GameComponent implements OnInit {
     public loading: boolean = true;
     public localPlayer: number;
 
+    public readonly cardRanks = cardRanks;
     public readonly CardType = CardType;
     public readonly CardSuit = CardSuit;
 

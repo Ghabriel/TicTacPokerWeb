@@ -86,9 +86,15 @@ export interface AchievementScheme {
     analyse(row: BoardRow): Achievement[];
 }
 
+export interface BoardData {
+    matrix: BoardMatrix;
+    score: number;
+    achievements: Achievement[];
+}
+
 export interface GameData {
     players: GamePlayer[];
-    boards: { [index: number]: BoardMatrix };
+    boards: { [index: number]: BoardData };
     hand: Card[];
     currentPlayerIndex: number;
 }

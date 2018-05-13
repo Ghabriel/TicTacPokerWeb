@@ -1,7 +1,7 @@
 import { isSameCard } from './CardUtils';
 import { TicTacPokerAchievementScheme } from './TicTacPokerAchievementScheme';
 import { Board } from './Board';
-import { Achievement, ScoreTable, AchievementScheme, Card, CardSuit, CardType, GamePlayer, PlayerType, GameData, BoardMatrix, GameMove, NormalCard } from './types';
+import { Achievement, ScoreTable, AchievementScheme, Card, CardSuit, CardType, GamePlayer, PlayerType, GameData, BoardMatrix, GameMove, NormalCard, BoardData } from './types';
 import { AI } from './AI';
 
 const achievementScheme = new TicTacPokerAchievementScheme();
@@ -53,11 +53,16 @@ export class GameController {
     }
 
     getData(): GameData {
-        const boards: { [index: number]: BoardMatrix } = {};
+        const boards: { [index: number]: BoardData } = {};
 
         for (const index in this.boards) {
             if (this.boards.hasOwnProperty(index)) {
-                boards[index] = this.boards[index].getMatrix();
+                const board = this.boards[index];
+                boards[index] = {
+                    matrix: board.getMatrix(),
+                    score: board.getScore(),
+                    achievements: board.getAchievements()
+                };
             }
         }
 

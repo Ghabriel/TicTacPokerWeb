@@ -67,6 +67,10 @@ export class Board {
         return this.score;
     }
 
+    getAchievements(): Achievement[] {
+        return this.achievements;
+    }
+
     set(row: number, column: number, card: NormalCard): void {
         this.internalSet(row, column, card);
     }

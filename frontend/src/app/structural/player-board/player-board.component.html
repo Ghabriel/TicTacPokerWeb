@@ -2,23 +2,26 @@
     <div class="flex-container">
         <div class="auto-flex player-name" *ngIf="!isLocalPlayer">{{ player.name }}</div>
         <div class="auto-flex player-name local-player" *ngIf="isLocalPlayer">Você</div>
-        <div class="fixed-flex score">0</div>
+        <div class="fixed-flex score">{{ board.score }}</div>
     </div>
-    <div class="achievements">
-        <ul>
-            <!-- TODO -->
-            <!-- <li>Par</li>
-            <li>Trinca</li>
-            <li>Royal Straight Flush</li> -->
-        </ul>
-    </div>
-    <div class="container board">
-        <div class="row" *ngFor="let row of board; let i = index">
-            <div class="col-4 slot-wrapper" *ngFor="let card of row; let j = index">
-                <div class="game-card" *ngIf="card === null" droppable (onDrop)="process(i, j, $event)"></div>
-                <div class="game-card" *ngIf="card !== null">
-                    <div class="rank">{{ card.rank }}</div>
-                    <div class="suit {{ CardSuit[card.suit] }}"></div>
+    <div class="flex-container main-container">
+        <div class="achievements fixed-flex">
+            <ul>
+                <li *ngFor="let achievement of achievements">{{ achievement }}</li>
+            </ul>
+        </div>
+        <div class="fixed-flex">
+            <div class="container board">
+                <div class="row" *ngFor="let row of board.matrix; let i = index">
+                    <div class="col-4 slot-col" *ngFor="let card of row; let j = index">
+                        <div class="slot-wrapper">
+                            <div class="game-card" *ngIf="card === null" droppable (onDrop)="process(i, j, $event)"></div>
+                            <div class="game-card" *ngIf="card !== null">
+                                <div class="rank">{{ cardRanks[card.rank] }}</div>
+                                <div class="suit {{ CardSuit[card.suit] }}"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

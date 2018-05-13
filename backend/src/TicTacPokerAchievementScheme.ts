@@ -25,11 +25,17 @@ export class TicTacPokerAchievementScheme implements AchievementScheme {
             const straightFlush = straight && flush;
             const royalStraightFlush = straightFlush && this.isRoyal(Array.from(ranks));
 
-            threeOfAKind       && result.push(Achievement.THREE_OF_A_KIND);
-            flush              && result.push(Achievement.FLUSH);
-            straight           && result.push(Achievement.STRAIGHT);
-            straightFlush      && result.push(Achievement.STRAIGHT_FLUSH);
-            royalStraightFlush && result.push(Achievement.ROYAL_STRAIGHT_FLUSH);
+            if (royalStraightFlush) {
+                return [Achievement.ROYAL_STRAIGHT_FLUSH];
+            }
+
+            if (straightFlush) {
+                return [Achievement.STRAIGHT_FLUSH];
+            }
+
+            threeOfAKind && result.push(Achievement.THREE_OF_A_KIND);
+            flush        && result.push(Achievement.FLUSH);
+            straight     && result.push(Achievement.STRAIGHT);
         }
 
         return result;

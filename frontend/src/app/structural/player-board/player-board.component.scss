@@ -19,7 +19,7 @@
     // display: inline-block;
     margin-bottom: $section-margin;
     padding: $player-info-padding-y $player-info-padding-x;
-    width: 2 * ($card-border + $player-info-padding-x) + 6 * $player-info-slot-padding + 3 * $card-width;
+    // width: 2 * ($card-border + $player-info-padding-x) + 6 * $player-info-slot-padding + 3 * $card-width;
 
     &.current-player {
         background-color: #ff8;
@@ -38,17 +38,30 @@
         font-weight: bold;
     }
 
-    .achievements {
-        ul {
-            list-style-type: none;
-            padding-left: 20px;
+    .main-container {
+        flex-direction: row;
+
+        .achievements {
+            font-weight: bold;
+            margin-right: 10px;
+
+            ul {
+                list-style-type: none;
+                padding-left: 10px;
+            }
+        }
+    
+        .board {
+            .slot-col {
+                margin-bottom: $card-slot-spacing;
+                max-height: $card-height;
+                padding: 0;
+                
+                .slot-wrapper {
+                    margin-right: $card-slot-spacing;
+                }
+            }
         }
     }
 
-    .board {
-        .slot-wrapper {
-            // padding: 2px;
-            padding: 0;
-        }
-    }
 }

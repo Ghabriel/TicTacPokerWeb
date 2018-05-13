@@ -10,6 +10,8 @@ export const AI = (board: Board, hand: Card[]): GameMove => {
 
     for (let rowIndex = 0; rowIndex < rows.length; rowIndex++) {
         const row = rows[rowIndex];
+        let stop = false;
+
         for (let columnIndex = 0; columnIndex < row.length; columnIndex++) {
             const card = row[columnIndex];
 
@@ -17,9 +19,15 @@ export const AI = (board: Board, hand: Card[]): GameMove => {
                 firstEmptySlot = {
                     row: rowIndex,
                     column: columnIndex
-                }
+                };
+
+                stop = true;
                 break;
             }
+        }
+
+        if (stop) {
+            break;
         }
     }
 

@@ -22,6 +22,7 @@ type Callback<T> = (value: T) => void;
 export class SocketController {
     private static connectedPlayers: PlayerConnection[] = [];
     private static games: Game[] = [];
+    private currentGame: Game | null = null;
 
     constructor(
         private io: socketio.Server,
@@ -48,7 +49,8 @@ export class SocketController {
         });
 
         socket.on('gameMove', (move: GameMove, callback: Callback<GameData>) => {
-            callback(this.gameMove(move));
+            callback(this.processPlayerMove(move));
+            this.processNextTurn();
         });
 
         socket.on('debug', (message: string) => {
@@ -148,9 +150,14 @@ export class SocketController {
         return game.getData();
     }
 
-    private game(): Game | null {
+    private game(resetCache: boolean = false): Game | null {
+        if (!resetCache && this.currentGame !== null) {
+            return this.currentGame;
+        }
+
         for (const game of SocketController.games) {
             if (game.hasHumanPlayer(this.name)) {
+                this.currentGame = game;
                 return game;
             }
         }
@@ -158,7 +165,7 @@ export class SocketController {
         return null;
     }
 
-    private gameMove(move: GameMove): GameData {
+    private processPlayerMove(move: GameMove): GameData {
         const game = this.game();
 
         if (game === null) {
@@ -167,11 +174,31 @@ export class SocketController {
         }
 
         game.processMove(move);
-        this.broadcastGameData();
+        this.broadcastGameDataToOthers();
         return game.getData();
     }
 
-    private broadcastGameData(): void {
+    private broadcastGameDataToOthers(): void {
         this.socket.broadcast.emit('gameDataChange', this.getGameData());
+    }
+
+    private broadcastGameData(): void {
+        this.io.emit('gameDataChange', this.getGameData());
+    }
+
+    private processNextTurn(): void {
+        const game = this.game();
+
+        if (game === null) {
+            // shouldn't happen
+            throw Error('Invalid application state');
+        }
+
+        const move = game.processNextTurn();
+
+        if (move !== null) {
+            game.processMove(move);
+            this.broadcastGameData();
+        }
     }
 }

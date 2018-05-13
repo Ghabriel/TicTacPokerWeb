@@ -2,6 +2,7 @@ import { isSameCard } from './CardUtils';
 import { TicTacPokerAchievementScheme } from './TicTacPokerAchievementScheme';
 import { Board } from './Board';
 import { Achievement, ScoreTable, AchievementScheme, Card, CardSuit, CardType, GamePlayer, PlayerType, GameData, BoardMatrix, GameMove, NormalCard } from './types';
+import { AI } from './AI';
 
 const achievementScheme = new TicTacPokerAchievementScheme();
 
@@ -96,6 +97,17 @@ export class GameController {
         }
 
         this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
+    }
+
+    processNextTurn(): GameMove | null {
+        const currentPlayer = this.players[this.currentPlayerIndex];
+
+        if (currentPlayer.type === PlayerType.HUMAN) {
+            return null;
+        }
+
+        const board = this.boards[this.currentPlayerIndex];
+        return AI(board, this.hand);
     }
 
     private generateDeck(): Card[] {

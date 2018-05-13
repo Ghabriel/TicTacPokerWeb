@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { NetworkService } from './../../services/network.service';
 import { AnyPlayer, Bot, Player, PlayerStatus, PlayerType, TeamMapping } from './../../types';
@@ -12,6 +11,7 @@ import { AnyPlayer, Bot, Player, PlayerStatus, PlayerType, TeamMapping } from '.
 export class LobbyCustomGameComponent implements OnInit {
     @Input() players: Player[];
     @Output() abortCustom = new EventEmitter<void>();
+    @Output() startGame = new EventEmitter<[AnyPlayer[], TeamMapping]>();
     public host: Player;
     public matchPlayers: AnyPlayer[];
     public playerTeams: TeamMapping;
@@ -19,10 +19,7 @@ export class LobbyCustomGameComponent implements OnInit {
 
     private numBots: number;
 
-    constructor(
-        private router: Router,
-        private network: NetworkService
-    ) { }
+    constructor(private network: NetworkService) { }
 
     ngOnInit() {
         this.host = {
@@ -102,18 +99,9 @@ export class LobbyCustomGameComponent implements OnInit {
     }
 
     start(): void {
-        if (!this.canStart) {
-            return;
+        if (this.canStart) {
+            this.startGame.emit([this.matchPlayers, this.playerTeams]);
         }
-
-        this.network.startGame(this.matchPlayers, this.playerTeams).then(success => {
-            if (success) {
-                this.router.navigate(['/game']);
-            } else {
-                // TODO: show error message
-                console.log('Failed to start game.');
-            }
-        });
     }
 
     cancel(): void {

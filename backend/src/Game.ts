@@ -32,4 +32,8 @@ export class Game {
     processMove(move: GameMove): void {
         this.controller.processMove(move);
     }
+
+    processNextTurn(): GameMove | null {
+        return this.controller.processNextTurn();
+    }
 }

@@ -3,6 +3,11 @@
         <h1>Lobby</h1>
     </header>
 
-    <app-lobby-user-list *ngIf="!customMatchMode" (initCustom)="initCustomMatch($event)"></app-lobby-user-list>
-    <app-lobby-custom-game *ngIf="customMatchMode" [players]="customMatchPlayers" (abortCustom)="abortCustomMatch()"></app-lobby-custom-game>
+    <app-lobby-user-list *ngIf="!customMatchMode"
+        (initCustom)="initCustomMatch($event)"
+        (startGame)="start($event)"></app-lobby-user-list>
+    <app-lobby-custom-game *ngIf="customMatchMode"
+        [players]="customMatchPlayers"
+        (abortCustom)="abortCustomMatch()"
+        (startGame)="start($event)"></app-lobby-custom-game>
 </article>

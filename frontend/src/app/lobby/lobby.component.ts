@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NetworkService } from './../services/network.service';
-import { Player } from './../types';
+import { AnyPlayer, Player, TeamMapping } from './../types';
 
 @Component({
     selector: 'app-lobby',
@@ -13,7 +13,10 @@ export class LobbyComponent implements OnInit {
     public customMatchMode: boolean = false;
     public customMatchPlayers: Player[] = [];
 
-    constructor() { }
+    constructor(
+        private router: Router,
+        private network: NetworkService
+    ) { }
 
     ngOnInit() {
         this.customMatchMode = false;
@@ -26,6 +29,17 @@ export class LobbyComponent implements OnInit {
 
     abortCustomMatch(): void {
         this.customMatchMode = false;
+    }
+
+    start([matchPlayers, playerTeams]: [AnyPlayer[], TeamMapping]): void {
+        this.network.startGame(matchPlayers, playerTeams).then(success => {
+            if (success) {
+                this.router.navigate(['/game']);
+            } else {
+                // TODO: show error message
+                console.log('Failed to start game.');
+            }
+        });
     }
 
 }

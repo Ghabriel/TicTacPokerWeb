@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { NetworkService } from './../../services/network.service';
-import { Player, PlayerStatus } from './../../types';
+import { AnyPlayer, Player, PlayerStatus, PlayerType, TeamMapping } from './../../types';
 
 @Component({
     selector: 'app-lobby-user-list',
@@ -10,6 +10,7 @@ import { Player, PlayerStatus } from './../../types';
 })
 export class LobbyUserListComponent implements OnInit {
     @Output() initCustom = new EventEmitter<Player[]>();
+    @Output() startGame = new EventEmitter<[AnyPlayer[], TeamMapping]>();
     public players: Player[];
     public loading: boolean = true;
     public customMatchMode: boolean = false;
@@ -46,14 +47,15 @@ export class LobbyUserListComponent implements OnInit {
         });
     }
 
-    play(playerIndex: number): void {
-        // TODO
-        alert(`play(${playerIndex})`);
+    playHuman(playerIndex: number): void {
+        this.play(this.players[playerIndex]);
     }
 
     playAI(): void {
-        // TODO
-        alert('play(AI)');
+        this.play({
+            name: 'Bot 1',
+            type: PlayerType.BOT
+        });
     }
 
     enterCustomMode(): void {
@@ -92,5 +94,22 @@ export class LobbyUserListComponent implements OnInit {
         sortedIndexes.sort();
 
         this.initCustom.emit(sortedIndexes.map(index => this.players[index]));
+    }
+
+    private self(): Player {
+        for (const player of this.players) {
+            if (player.name === this.username) {
+                return player;
+            }
+        }
+
+        throw Error('Local player not found');
+    }
+
+    private play(opponent: AnyPlayer): void {
+        const matchPlayers: AnyPlayer[] = [this.self(), opponent];
+        const teams: TeamMapping = { 0: 0, 1: 1 };
+
+        this.startGame.emit([matchPlayers, teams]);
     }
 }

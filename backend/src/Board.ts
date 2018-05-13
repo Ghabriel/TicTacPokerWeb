@@ -23,6 +23,22 @@ export class Board {
         return this.rows;
     }
 
+    getRows(): BoardRow[] {
+        return this.rows;
+    }
+
+    getColumns(): BoardRow[] {
+        return this.columns;
+    }
+
+    getDiagonals(): BoardRow[] {
+        const rows = this.rows;
+        return [
+            [rows[0][0], rows[1][1], rows[2][2]],
+            [rows[0][2], rows[1][1], rows[2][0]]
+        ];
+    }
+
     getScore(): number {
         if (this.score !== null) {
             return this.score;
@@ -65,13 +81,5 @@ export class Board {
         this.rows[row][column] = card;
         this.columns[column][row] = card;
         this.score = null;
-    }
-
-    private getDiagonals(): BoardRow[] {
-        const rows = this.rows;
-        return [
-            [rows[0][0], rows[1][1], rows[2][2]],
-            [rows[0][2], rows[1][1], rows[2][0]]
-        ];
     }
 }
